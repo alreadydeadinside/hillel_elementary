@@ -9,6 +9,10 @@ import java.util.Objects;
 public class User {
     private String Name;
 
+    public User() {
+
+    }
+
     @Override
     public String toString() {
         return "User{" +
