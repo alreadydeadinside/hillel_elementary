@@ -1,7 +1,11 @@
 package lesson10;
 
+import lombok.Data;
+import lombok.Setter;
+
 import java.util.Objects;
 
+@Setter
 public class User {
     private String Name;
 
