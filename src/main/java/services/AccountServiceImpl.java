@@ -29,9 +29,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getById(int id) {
+    public Account findId(int id) {
         AccountDao accountDao = new AccountDaoImpl();
-        return accountDao.getById(id);
+        return accountDao.findId(id);
     }
 
     @Override

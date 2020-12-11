@@ -8,7 +8,7 @@ public interface RoleService {
 
     void update(Role role);
 
-    Role getById(int id);
+    Role findId(int id);
 
     void delete(Role role);
 }

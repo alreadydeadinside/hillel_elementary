@@ -23,9 +23,9 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car getById(int id) {
+    public Car findId(int id) {
         CarDao carDao = new CarDaoImpl();
-        return carDao.getById(id);
+        return carDao.findId(id);
     }
 
     @Override

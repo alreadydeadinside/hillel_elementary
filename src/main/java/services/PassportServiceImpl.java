@@ -23,9 +23,9 @@ public class PassportServiceImpl implements PassportService {
     }
 
     @Override
-    public Passport getById(int id) {
+    public Passport findId(int id) {
         PassportDao passportDao = new PassportDaoImpl();
-        return passportDao.getById(id);
+        return passportDao.findId(id);
     }
 
     @Override
