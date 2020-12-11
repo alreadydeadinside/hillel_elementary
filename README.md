@@ -1,2 +1,2 @@
-#Simple servlet task with with such visualization:
+Simple servlet task with with such visualization:
 ![Screenshot](screenshot.png)
