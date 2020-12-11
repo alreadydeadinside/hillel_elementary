@@ -4,13 +4,13 @@ import entities.Account;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import utils.Hibernate;
+import utils.HibernateUtil;
 
 public class AccountDaoImpl implements AccountDao {
 
     @Override
     public void save(Account account) {
-        SessionFactory sessionFactory = Hibernate.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -21,7 +21,7 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public void update(Account account) {
-        SessionFactory sessionFactory = Hibernate.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -31,8 +31,8 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public Account findUser(int id) {
-        SessionFactory sessionFactory = Hibernate.getSessionFactory();
+    public Account getById(int id) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
         return session.byId(Account.class).getReference(id);
@@ -41,7 +41,7 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public void delete(Account account) {
-        SessionFactory sessionFactory = Hibernate.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 

@@ -1,22 +1,38 @@
 package entities;
 
 import org.hibernate.annotations.NaturalId;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "clients")
 public class Client {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     private String name;
+    @Column(unique = true)
     private String email;
     @NaturalId
     private long phone;
     private String about;
     private int age;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "password_id")
+    private Passport passport;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<Car> cars;
+
+    @ManyToMany
+    @JoinTable(
+            name = "client_role",
+            joinColumns = @JoinColumn(name = "client_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public Client() {
     }
@@ -84,6 +100,30 @@ public class Client {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Passport getPassport() {
+        return passport;
+    }
+
+    public void setPassport(Passport passport) {
+        this.passport = passport;
+    }
+
+    public Set<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

@@ -4,13 +4,13 @@ import entities.Client;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import utils.Hibernate;
+import utils.HibernateUtil;
 
 public class ClientDaoImpl implements ClientDao {
 
     @Override
     public void save(Client client) {
-        SessionFactory sessionFactory = Hibernate.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -21,7 +21,7 @@ public class ClientDaoImpl implements ClientDao {
 
     @Override
     public void update(Client client) {
-        SessionFactory sessionFactory = Hibernate.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -31,8 +31,8 @@ public class ClientDaoImpl implements ClientDao {
     }
 
     @Override
-    public Client findUser(int id) {
-        SessionFactory sessionFactory = Hibernate.getSessionFactory();
+    public Client getById(int id) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
         return session
@@ -43,7 +43,7 @@ public class ClientDaoImpl implements ClientDao {
 
     @Override
     public void delete(Client client) {
-        SessionFactory sessionFactory = Hibernate.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -54,7 +54,7 @@ public class ClientDaoImpl implements ClientDao {
 
     @Override
     public Client getByPhone(long phone) {
-        SessionFactory sessionFactory = Hibernate.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
         return session

@@ -1,51 +1,50 @@
 package dao;
 
-import entities.Status;
+import entities.Passport;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import utils.HibernateUtil;
 
-public class StatusDaoImpl implements StatusDao {
-
+public class PassportDaoImpl implements PassportDao {
     @Override
-    public void save(Status status) {
+    public void save(Passport passport) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.save(status);
+        session.save(passport);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public void update(Status status) {
+    public void update(Passport passport) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.update(status);
+        session.update(passport);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public Status getById(int id) {
+    public Passport getById(int id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
-        return session.byId(Status.class).getReference(id);
+        return session.byId(Passport.class).getReference(id);
     }
 
 
     @Override
-    public void delete(Status status) {
+    public void delete(Passport passport) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.delete(status);
+        session.delete(passport);
         transaction.commit();
         session.close();
     }

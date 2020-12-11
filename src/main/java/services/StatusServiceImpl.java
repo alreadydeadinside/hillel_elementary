@@ -29,9 +29,9 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public Status findUser(int id) {
+    public Status getById(int id) {
         StatusDao statusDao = new StatusDaoImpl();
-        return statusDao.findUser(id);
+        return statusDao.getById(id);
     }
 
     @Override

@@ -1,51 +1,50 @@
 package dao;
 
-import entities.Status;
+import entities.Role;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import utils.HibernateUtil;
 
-public class StatusDaoImpl implements StatusDao {
-
+public class RoleDaoImpl implements RoleDao {
     @Override
-    public void save(Status status) {
+    public void save(Role role) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.save(status);
+        session.save(role);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public void update(Status status) {
+    public void update(Role role) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.update(status);
+        session.update(role);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public Status getById(int id) {
+    public Role getById(int id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
-        return session.byId(Status.class).getReference(id);
+        return session.byId(Role.class).getReference(id);
     }
 
 
     @Override
-    public void delete(Status status) {
+    public void delete(Role role) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.delete(status);
+        session.delete(role);
         transaction.commit();
         session.close();
     }

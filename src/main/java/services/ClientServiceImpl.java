@@ -29,9 +29,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client findUser(int id) {
+    public Client getById(int id) {
         ClientDao customerDao = new ClientDaoImpl();
-        return customerDao.findUser(id);
+        return customerDao.getById(id);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client findPhone(long phone) {
+    public Client getByPhone(long phone) {
         ClientDao customerDao = new ClientDaoImpl();
         return customerDao.getByPhone(phone);
     }

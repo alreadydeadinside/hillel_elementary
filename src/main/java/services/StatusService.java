@@ -8,7 +8,7 @@ public interface StatusService {
 
     void update(Status status);
 
-    Status findUser(int id);
+    Status getById(int id);
 
     void delete(Status status);
 }

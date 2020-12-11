@@ -1,51 +1,50 @@
 package dao;
 
-import entities.Status;
+import entities.Car;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import utils.HibernateUtil;
 
-public class StatusDaoImpl implements StatusDao {
-
+public class CarDaoImpl implements CarDao {
     @Override
-    public void save(Status status) {
+    public void save(Car car) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.save(status);
+        session.save(car);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public void update(Status status) {
+    public void update(Car car) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.update(status);
+        session.update(car);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public Status getById(int id) {
+    public Car getById(int id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
-        return session.byId(Status.class).getReference(id);
+        return session.byId(Car.class).getReference(id);
     }
 
 
     @Override
-    public void delete(Status status) {
+    public void delete(Car car) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.delete(status);
+        session.delete(car);
         transaction.commit();
         session.close();
     }
