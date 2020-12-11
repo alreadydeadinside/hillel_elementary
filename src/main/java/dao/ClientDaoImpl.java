@@ -31,7 +31,7 @@ public class ClientDaoImpl implements ClientDao {
     }
 
     @Override
-    public Client getById(int id) {
+    public Client findId(int id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
@@ -53,7 +53,7 @@ public class ClientDaoImpl implements ClientDao {
     }
 
     @Override
-    public Client getByPhone(long phone) {
+    public Client findPhone(long phone) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 

@@ -30,7 +30,7 @@ public class PassportDaoImpl implements PassportDao {
     }
 
     @Override
-    public Passport getById(int id) {
+    public Passport findId(int id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 

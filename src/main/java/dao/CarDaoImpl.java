@@ -30,7 +30,7 @@ public class CarDaoImpl implements CarDao {
     }
 
     @Override
-    public Car getById(int id) {
+    public Car findId(int id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 

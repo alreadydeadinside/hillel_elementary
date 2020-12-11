@@ -30,7 +30,7 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public Role getById(int id) {
+    public Role findId(int id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 

@@ -31,7 +31,7 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public Account getById(int id) {
+    public Account findId(int id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 

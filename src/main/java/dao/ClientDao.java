@@ -8,9 +8,9 @@ public interface ClientDao {
 
     void update(Client client);
 
-    Client getById(int id);
+    Client findId(int id);
 
     void delete(Client client);
 
-    Client getByPhone(long phone);
+    Client findPhone(long phone);
 }

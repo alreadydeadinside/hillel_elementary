@@ -8,7 +8,7 @@ public interface AccountDao {
 
     void update(Account account);
 
-    Account getById(int id);
+    Account findId(int id);
 
     void delete(Account account);
 }

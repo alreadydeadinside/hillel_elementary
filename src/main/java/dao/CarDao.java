@@ -8,7 +8,7 @@ public interface CarDao {
 
     void update(Car car);
 
-    Car getById(int id);
+    Car findId(int id);
 
     void delete(Car car);
 }

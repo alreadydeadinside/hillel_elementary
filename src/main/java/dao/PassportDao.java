@@ -8,7 +8,7 @@ public interface PassportDao {
 
     void update(Passport passport);
 
-    Passport getById(int id);
+    Passport findId(int id);
 
     void delete(Passport passport);
 }

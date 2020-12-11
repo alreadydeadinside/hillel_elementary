@@ -31,7 +31,7 @@ public class StatusDaoImpl implements StatusDao {
     }
 
     @Override
-    public Status getById(int id) {
+    public Status findId(int id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 

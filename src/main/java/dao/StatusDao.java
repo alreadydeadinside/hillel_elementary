@@ -8,7 +8,7 @@ public interface StatusDao {
 
     void update(Status status);
 
-    Status getById(int id);
+    Status findId(int id);
 
     void delete(Status status);
 }
