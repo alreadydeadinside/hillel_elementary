@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-      <!--  <servlet>
+      <servlet>
           <servlet-name>FromCustomersToCompanies</servlet-name>
-            <servlet-class>CustomersServlet</servlet-class>
+            <servlet-class>servlets.CompaniesServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>FromCustomersToCompanies</servlet-name>
@@ -13,10 +13,10 @@
         </servlet-mapping>
     <servlet>
         <servlet-name>FromCompaniesToOrderedGoods</servlet-name>
-        <servlet-class>CompaniesServlet</servlet-class>
+        <servlet-class>servlets.OrderedGoodsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>FromCompaniesToOrderedGoods</servlet-name>
         <url-pattern>/orderedgoods</url-pattern>
-    </servlet-mapping> -->
+    </servlet-mapping>
 </web-app>

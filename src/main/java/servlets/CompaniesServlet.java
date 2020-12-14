@@ -1,7 +1,6 @@
-package servlerts;
+package servlets;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,11 +19,10 @@ import java.io.IOException;
 // 5. Наполнение страниц не имеет значения. Какая страница какую ссылку будет иметь также не имеет значения, главное чтобы не было ситуации, когда перешел на jsp и из нее не было ссылки на другую (тупик)
 
 
-@WebServlet("/employees")
-public class OrderedGoodsServlet extends HttpServlet {
+public class CompaniesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("Employees.jsp").forward(req, resp);
+        req.getRequestDispatcher("OrderedGoods.jsp").forward(req, resp);
     }
 }

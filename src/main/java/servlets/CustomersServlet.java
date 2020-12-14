@@ -1,4 +1,4 @@
-package servlerts;
+package servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,13 +19,11 @@ import java.io.IOException;
 // 4. На каждой странице сделать ссылку на другую страницу.
 // 5. Наполнение страниц не имеет значения. Какая страница какую ссылку будет иметь также не имеет значения, главное чтобы не было ситуации, когда перешел на jsp и из нее не было ссылки на другую (тупик)
 
-
-@WebServlet("/customers")
-public class EmployeesServlet extends HttpServlet {
+@WebServlet("/companies")
+public class CustomersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("Customers.jsp").forward(req, resp);
+        req.getRequestDispatcher("Companies.jsp").forward(req, resp);
     }
 }
-
