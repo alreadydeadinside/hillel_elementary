@@ -1,73 +1,49 @@
-import entities.Human;
+import deadlock.FirstClass;
+import deadlock.SecondClass;
+import threads.ExampleCallable;
+import threads.ExampleRunnable;
+import threads.ExampleThread;
+import utils.ThreadHelper;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class Main {
-    public static void main(String[] args) {
-        //first
-        List<Object> streamEmpty = Stream
-                .empty()
-                .sorted()
-                .skip(1)
-                .collect(Collectors.toList());
-        streamEmpty.forEach(System.out::println);
 
-        //second
-        List<String> listNames = Arrays.asList("Antony", "Will", "John", "Taylor", "Sanchez");
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
 
-        Stream<String> streamNames = listNames.stream()
-                .filter(string -> string.length() < 5)
-                .map(String::toUpperCase);
-        streamNames.forEach(System.out::println);
+        ExampleThread exampleThread = new ExampleThread();
+        ExampleRunnable exampleRunnable = new ExampleRunnable();
+        ExampleCallable exampleCallable = new ExampleCallable();
 
-        //third
-        Stream<Object> streamRandom = Stream.of("Sanchez", 12, "Taylor", 17);
-        List<Object> listOfNumbers = streamRandom
-                .collect(Collectors.toList());
-        listOfNumbers.forEach(System.out::println);
+        exampleThread.start();
+        exampleThread.join();
 
-        //fourth
-        Map<Integer, String> hashMap = new HashMap<>();
-        hashMap.put(1, "one");
-        hashMap.put(2, "two");
-        hashMap.put(3, "three");
-        hashMap.put(4, "four");
-        hashMap.put(5, "five");
 
-        Set<Object> optionalMap = new HashSet<>(hashMap.values());
-        optionalMap.forEach(System.out::println);
+        Thread threadRunnable = new Thread(exampleRunnable);
+        threadRunnable.start();
+        threadRunnable.join();
 
-        //fifth
-        List<String> digits = Arrays.asList("1", "2", "3", "4","4","6","7","8","9","10");
-        List<Integer> integerList = digits.stream()
-                .skip(1)
-                .limit(8)
-                .map(Integer::parseInt)
-                .filter(n -> n%2 == 0)
-                .distinct()
-                .collect(Collectors.toList());
-        integerList.forEach(System.out::println);
+        FutureTask<String> task = new FutureTask<>(exampleCallable);
+        Thread threadCallable = new Thread(task);
+        threadCallable.start();
+        threadCallable.join();
+        String result = task.get();
+        System.out.println("Thread Callable: " + result + "\n");
 
-        //sixth
-        Stream<String> namesStream = Stream.of("Antony", "Will", "John", "Taylor", "Sanchez", "Carly", "Nate", "Frank");
-        Optional<String> parallelStream = namesStream.parallel()
-                .sorted()
-                .filter(string -> string.length() > 4)
-                .findFirst();
-        System.out.println(parallelStream.orElse("error"));
+        Thread.sleep(1000);
+        System.out.println("Increments: " + ThreadHelper.increment);
 
-        //seventh
-        ConvertTo convert = new ConvertTo();
+        FirstClass firstClass = new FirstClass();
+        SecondClass secondClass = new SecondClass();
 
-        List<String> namesList = Arrays.asList("Will", "John", "Taylor", "Sanchez", "Carly", "Frank");
-        Set<Human> humans = namesList.stream()
-                .map(ConvertTo::trimString)
-                .map(convert::testString)
-                .map(String::toUpperCase)
-                .map(Human::new)
-                .collect(Collectors.toSet());
-        humans.forEach(human -> System.out.println(human.getName()));
+        firstClass.setSecondClass(secondClass);
+        secondClass.setFirstClass(firstClass);
+
+        Thread first = new Thread(() -> System.out.println(firstClass.getStringFromSecondClass()));
+        Thread second = new Thread(() -> System.out.println(secondClass.getStringFromFirstClass()));
+
+        first.start();
+        second.start();
     }
 }
