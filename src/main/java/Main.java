@@ -1,35 +1,49 @@
-import entities.Account;
-import entities.Client;
-import entities.Status;
-import services.*;
+import deadlock.FirstClass;
+import deadlock.SecondClass;
+import threads.ExampleCallable;
+import threads.ExampleRunnable;
+import threads.ExampleThread;
+import utils.ThreadHelper;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class Main {
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+
+        ExampleThread exampleThread = new ExampleThread();
+        ExampleRunnable exampleRunnable = new ExampleRunnable();
+        ExampleCallable exampleCallable = new ExampleCallable();
+
+        exampleThread.start();
+        exampleThread.join();
 
 
+        Thread threadRunnable = new Thread(exampleRunnable);
+        threadRunnable.start();
+        threadRunnable.join();
 
-        ClientService service = new ClientServiceImpl();
-        Client client = new Client(1, "Alex Bobovich", "qwerty12345@mail.com", 791231912321L, "Cooker", 21);
-        Client clientById = service.findUser(1);
-        System.out.println(clientById.toString());
+        FutureTask<String> task = new FutureTask<>(exampleCallable);
+        Thread threadCallable = new Thread(task);
+        threadCallable.start();
+        threadCallable.join();
+        String result = task.get();
+        System.out.println("Thread Callable: " + result + "\n");
 
-        Status status = new Status("sampler", "some sample");
-        StatusService service_2 = new StatusServiceImpl();
-        // service.delete(status);
+        Thread.sleep(1000);
+        System.out.println("Increments: " + ThreadHelper.increment);
 
-        Account account = new Account(12,22, "1111111111", 123.25);
-        AccountService service_1 = new AccountServiceImpl();
-       // service.delete(account);
+        FirstClass firstClass = new FirstClass();
+        SecondClass secondClass = new SecondClass();
 
-        Client clientByPhone = service.findPhone(791231912321L);
-        System.out.println(clientByPhone.toString());
+        firstClass.setSecondClass(secondClass);
+        secondClass.setFirstClass(firstClass);
 
-        service.save(client);
+        Thread first = new Thread(() -> System.out.println(firstClass.getStringFromSecondClass()));
+        Thread second = new Thread(() -> System.out.println(secondClass.getStringFromFirstClass()));
 
-        service.update(client);
-
-        service.delete(client);
-
-
+        first.start();
+        second.start();
     }
 }
