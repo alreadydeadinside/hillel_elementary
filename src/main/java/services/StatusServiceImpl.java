@@ -3,15 +3,15 @@ package services;
 import dao.StatusDao;
 import dao.StatusDaoImpl;
 import entities.Status;
+import org.apache.log4j.Logger;
 
 public class StatusServiceImpl implements StatusService {
 
+    Logger logger = Logger.getLogger(StatusServiceImpl.class);
+
     @Override
     public void save(Status status) {
-        if (status == null) {
-            System.out.println("client is empty");
-            return;
-        }
+        logger.debug(status.toString());
 
         StatusDao statusDao = new StatusDaoImpl();
         statusDao.save(status);
@@ -19,27 +19,23 @@ public class StatusServiceImpl implements StatusService {
 
     @Override
     public void update(Status status) {
-        if (status == null) {
-            System.out.println("client is empty");
-            return;
-        }
+        logger.debug(status.toString());
 
         StatusDao statusDao = new StatusDaoImpl();
         statusDao.update(status);
     }
 
     @Override
-    public Status findId(int id) {
+    public Status getById(int id) {
+        logger.debug(id);
+
         StatusDao statusDao = new StatusDaoImpl();
-        return statusDao.findId(id);
+        return statusDao.getById(id);
     }
 
     @Override
     public void delete(Status status) {
-        if (status == null) {
-            System.out.println("client is empty");
-            return;
-        }
+        logger.debug(status.toString());
 
         StatusDao statusDao = new StatusDaoImpl();
         statusDao.delete(status);

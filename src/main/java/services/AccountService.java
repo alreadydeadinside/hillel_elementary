@@ -8,7 +8,7 @@ public interface AccountService {
 
     void update(Account account);
 
-    Account findId(int id);
+    Account getById(int id);
 
     void delete(Account account);
 }

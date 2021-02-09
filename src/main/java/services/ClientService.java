@@ -8,9 +8,9 @@ public interface ClientService {
 
     void update(Client client);
 
-    Client findId(int id);
+    Client getById(int id);
 
     void delete(Client client);
 
-    Client findPhone(long phone);
+    Client getByPhone(long phone);
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import entities.Status;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,8 +9,12 @@ import utils.HibernateUtil;
 
 public class StatusDaoImpl implements StatusDao {
 
+    Logger logger = Logger.getLogger(StatusDaoImpl.class);
+
     @Override
     public void save(Status status) {
+        logger.debug(status.toString());
+
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -21,6 +26,8 @@ public class StatusDaoImpl implements StatusDao {
 
     @Override
     public void update(Status status) {
+        logger.debug(status.toString());
+
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -31,7 +38,9 @@ public class StatusDaoImpl implements StatusDao {
     }
 
     @Override
-    public Status findId(int id) {
+    public Status getById(int id) {
+        logger.debug(id);
+
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
@@ -41,6 +50,8 @@ public class StatusDaoImpl implements StatusDao {
 
     @Override
     public void delete(Status status) {
+        logger.debug(status.toString());
+
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

@@ -3,15 +3,15 @@ package services;
 import dao.ClientDao;
 import dao.ClientDaoImpl;
 import entities.Client;
+import org.apache.log4j.Logger;
 
 public class ClientServiceImpl implements ClientService {
 
+    Logger logger = Logger.getLogger(ClientServiceImpl.class);
+
     @Override
     public void save(Client client) {
-        if (client == null) {
-            System.out.println("client is empty");
-            return;
-        }
+        logger.debug(client.toString());
 
         ClientDao clientDao = new ClientDaoImpl();
         clientDao.save(client);
@@ -19,35 +19,33 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void update(Client client) {
-        if (client == null) {
-            System.out.println("client is empty");
-            return;
-        }
+        logger.debug(client.toString());
 
         ClientDao clientDao = new ClientDaoImpl();
         clientDao.update(client);
     }
 
     @Override
-    public Client findId(int id) {
+    public Client getById(int id) {
+        logger.debug(id);
+
         ClientDao customerDao = new ClientDaoImpl();
-        return customerDao.findId(id);
+        return customerDao.getById(id);
     }
 
     @Override
     public void delete(Client client) {
-        if (client == null) {
-            System.out.println("client is empty");
-            return;
-        }
+        logger.debug(client.toString());
 
         ClientDao clientDao = new ClientDaoImpl();
         clientDao.delete(client);
     }
 
     @Override
-    public Client findPhone(long phone) {
+    public Client getByPhone(long phone) {
+        logger.debug(phone);
+
         ClientDao customerDao = new ClientDaoImpl();
-        return customerDao.findPhone(phone);
+        return customerDao.getByPhone(phone);
     }
 }
