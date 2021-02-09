@@ -1,79 +1,73 @@
-import actions.*;
-import functional.ConsumerInterface;
-import functional.FunctionInterface;
-import functional.PredicateInterface;
-import functional.SupplierInterface;
-import utils.Helper;
+import entities.Human;
 
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        FirstAction.move(300);
-        SecondAction.countSum(51, 22);
-        HalfImpl firstActions = new HalfImpl();
-        firstActions.printActionOne("1");
-        firstActions.printActionTwo("2");
-        firstActions.showNumber(105);
-        firstActions.showSize(200);
-        int name = firstActions.getLength("Bohdan");
-        System.out.println("Name length: " + name);
+        //first
+        List<Object> streamEmpty = Stream
+                .empty()
+                .sorted()
+                .skip(1)
+                .collect(Collectors.toList());
+        streamEmpty.forEach(System.out::println);
 
-        ThirdAction.trim("   test for trim ");
-        FourthAction.upper(" uppercase test");
-        RestImpl secondActions = new RestImpl();
-        secondActions.printActionThree("3");
-        secondActions.printActionFour("4");
-        secondActions.showPlace(5);
-        secondActions.showPrice(1500);
-        int surname = secondActions.getLength("Vakaliuk");
-        System.out.println("Surname length: " + surname);
+        //second
+        List<String> listNames = Arrays.asList("Antony", "Will", "John", "Taylor", "Sanchez");
 
-        Helper helper = new Helper();
-        System.out.println(helper.checkEmail("brytong@ukr.net"));
-        System.out.println(helper.checkEmail("wrongemail"));
+        Stream<String> streamNames = listNames.stream()
+                .filter(string -> string.length() < 5)
+                .map(String::toUpperCase);
+        streamNames.forEach(System.out::println);
 
-        PredicateInterface<Double> predicateInterface = (val) -> val > 1500.0;
-        boolean resultPredicateDouble = predicateInterface.check(3000.0);
-        System.out.println("resultPredicateDouble: " + resultPredicateDouble);
+        //third
+        Stream<Object> streamRandom = Stream.of("Sanchez", 12, "Taylor", 17);
+        List<Object> listOfNumbers = streamRandom
+                .collect(Collectors.toList());
+        listOfNumbers.forEach(System.out::println);
 
-        ConsumerInterface<String> consumerInterface = (str) -> {
-            char[] result = str.toCharArray();
-            return result;
-        };
-        System.out.println("resultConsumer: " + Arrays.toString(consumerInterface.accept("TEST")));
+        //fourth
+        Map<Integer, String> hashMap = new HashMap<>();
+        hashMap.put(1, "one");
+        hashMap.put(2, "two");
+        hashMap.put(3, "three");
+        hashMap.put(4, "four");
+        hashMap.put(5, "five");
 
-        FunctionInterface<Integer, String> functionInterface = (i) -> {
-            switch (i) {
-                case 1:
-                    return "one";
-                case 2:
-                    return "two";
-                case 3:
-                    return "three";
-                case 4:
-                    return "four";
-                case 5:
-                    return "five";
-                case 6:
-                    return "six";
-                case 7:
-                    return "seven";
-                case 8:
-                    return "eight";
-                case 9:
-                    return "nine";
-                case 10:
-                    return "ten";
-                default:
-                    return "unknown";
-            }
-        };
-        String convert = functionInterface.convert(9);
-        System.out.println("functionInterfaceResult: " + convert);
+        Set<Object> optionalMap = new HashSet<>(hashMap.values());
+        optionalMap.forEach(System.out::println);
 
-        SupplierInterface<String> supplierInterface = () -> "SAMPLE TEXT";
-        String text = supplierInterface.get();
-        System.out.println("supplierInterfaceResult: " + text);
+        //fifth
+        List<String> digits = Arrays.asList("1", "2", "3", "4","4","6","7","8","9","10");
+        List<Integer> integerList = digits.stream()
+                .skip(1)
+                .limit(8)
+                .map(Integer::parseInt)
+                .filter(n -> n%2 == 0)
+                .distinct()
+                .collect(Collectors.toList());
+        integerList.forEach(System.out::println);
+
+        //sixth
+        Stream<String> namesStream = Stream.of("Antony", "Will", "John", "Taylor", "Sanchez", "Carly", "Nate", "Frank");
+        Optional<String> parallelStream = namesStream.parallel()
+                .sorted()
+                .filter(string -> string.length() > 4)
+                .findFirst();
+        System.out.println(parallelStream.orElse("error"));
+
+        //seventh
+        ConvertTo convert = new ConvertTo();
+
+        List<String> namesList = Arrays.asList("Will", "John", "Taylor", "Sanchez", "Carly", "Frank");
+        Set<Human> humans = namesList.stream()
+                .map(ConvertTo::trimString)
+                .map(convert::testString)
+                .map(String::toUpperCase)
+                .map(Human::new)
+                .collect(Collectors.toSet());
+        humans.forEach(human -> System.out.println(human.getName()));
     }
 }
