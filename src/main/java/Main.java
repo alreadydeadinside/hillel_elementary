@@ -1,35 +1,64 @@
-import entities.Account;
-import entities.Client;
-import entities.Status;
-import services.*;
+import lock.LockExample;
+import threads.FirstThread;
+import threads.SecondThread;
+import utils.ThreadHelper;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        FirstThread firstThread = new FirstThread();
+        SecondThread secondThread = new SecondThread();
 
+        firstThread.start();
+        secondThread.start();
 
+        Thread.sleep(15000);
+        System.out.println("Decrements loop times: " + ThreadHelper.atomicInteger + "\n");
 
-        ClientService service = new ClientServiceImpl();
-        Client client = new Client(1, "Alex Bobovich", "qwerty12345@mail.com", 791231912321L, "Cooker", 21);
-        Client clientById = service.findUser(1);
-        System.out.println(clientById.toString());
+        //lock
 
-        Status status = new Status("sampler", "some sample");
-        StatusService service_2 = new StatusServiceImpl();
-        // service.delete(status);
+        Thread lockThreadOne = new Thread(new Runnable() {
+            private LockExample lockExample = new LockExample();
 
-        Account account = new Account(12,22, "1111111111", 123.25);
-        AccountService service_1 = new AccountServiceImpl();
-       // service.delete(account);
+            @Override
+            public void run() {
+                Thread.currentThread().setName("first thread");
 
-        Client clientByPhone = service.findPhone(791231912321L);
-        System.out.println(clientByPhone.toString());
+                lockExample.write();
+                lockExample.print("first lock");
+                lockExample.sum(15, 45);
+            }
+        });
 
-        service.save(client);
+        Thread lockThreadTwo = new Thread(new Runnable() {
+            private LockExample lockExample = new LockExample();
 
-        service.update(client);
+            @Override
+            public void run() {
+                Thread.currentThread().setName("second thread");
 
-        service.delete(client);
+                lockExample.write();
+                lockExample.print("second lock");
+                lockExample.sum(3, 7);
+            }
+        });
 
+        Thread lockThreadThree = new Thread(new Runnable() {
+            private LockExample lockExample = new LockExample();
 
+            @Override
+            public void run() {
+                Thread.currentThread().setName("third thread");
+
+                lockExample.write();
+                lockExample.print("third lock");
+                lockExample.sum(50, 100);
+            }
+        });
+
+        lockThreadOne.start();
+        lockThreadOne.join();
+        lockThreadTwo.start();
+        lockThreadTwo.join();
+        lockThreadThree.start();
     }
 }
