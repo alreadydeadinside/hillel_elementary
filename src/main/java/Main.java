@@ -1,49 +1,64 @@
-import deadlock.FirstClass;
-import deadlock.SecondClass;
-import threads.ExampleCallable;
-import threads.ExampleRunnable;
-import threads.ExampleThread;
+import lock.LockExample;
+import threads.FirstThread;
+import threads.SecondThread;
 import utils.ThreadHelper;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
-
 public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        FirstThread firstThread = new FirstThread();
+        SecondThread secondThread = new SecondThread();
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        firstThread.start();
+        secondThread.start();
 
-        ExampleThread exampleThread = new ExampleThread();
-        ExampleRunnable exampleRunnable = new ExampleRunnable();
-        ExampleCallable exampleCallable = new ExampleCallable();
+        Thread.sleep(15000);
+        System.out.println("Decrements loop times: " + ThreadHelper.atomicInteger + "\n");
 
-        exampleThread.start();
-        exampleThread.join();
+        //lock
 
+        Thread lockThreadOne = new Thread(new Runnable() {
+            private LockExample lockExample = new LockExample();
 
-        Thread threadRunnable = new Thread(exampleRunnable);
-        threadRunnable.start();
-        threadRunnable.join();
+            @Override
+            public void run() {
+                Thread.currentThread().setName("first thread");
 
-        FutureTask<String> task = new FutureTask<>(exampleCallable);
-        Thread threadCallable = new Thread(task);
-        threadCallable.start();
-        threadCallable.join();
-        String result = task.get();
-        System.out.println("Thread Callable: " + result + "\n");
+                lockExample.write();
+                lockExample.print("first lock");
+                lockExample.sum(15, 45);
+            }
+        });
 
-        Thread.sleep(1000);
-        System.out.println("Increments: " + ThreadHelper.increment);
+        Thread lockThreadTwo = new Thread(new Runnable() {
+            private LockExample lockExample = new LockExample();
 
-        FirstClass firstClass = new FirstClass();
-        SecondClass secondClass = new SecondClass();
+            @Override
+            public void run() {
+                Thread.currentThread().setName("second thread");
 
-        firstClass.setSecondClass(secondClass);
-        secondClass.setFirstClass(firstClass);
+                lockExample.write();
+                lockExample.print("second lock");
+                lockExample.sum(3, 7);
+            }
+        });
 
-        Thread first = new Thread(() -> System.out.println(firstClass.getStringFromSecondClass()));
-        Thread second = new Thread(() -> System.out.println(secondClass.getStringFromFirstClass()));
+        Thread lockThreadThree = new Thread(new Runnable() {
+            private LockExample lockExample = new LockExample();
 
-        first.start();
-        second.start();
+            @Override
+            public void run() {
+                Thread.currentThread().setName("third thread");
+
+                lockExample.write();
+                lockExample.print("third lock");
+                lockExample.sum(50, 100);
+            }
+        });
+
+        lockThreadOne.start();
+        lockThreadOne.join();
+        lockThreadTwo.start();
+        lockThreadTwo.join();
+        lockThreadThree.start();
     }
 }
